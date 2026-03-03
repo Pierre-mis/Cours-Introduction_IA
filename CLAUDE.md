@@ -114,13 +114,22 @@ All code uses `sklearn` (scikit-learn) for consistency and ease of learning.
 - Solution: Feature selection and fairness-aware modeling
 
 ### Model Evaluation Beyond Accuracy
-- Uses confusion matrices, precision, recall, F1-score
+- Section 5.A: Confusion matrices, precision, recall, F1-score
+- Section 5.A.2: **ROC Curves & AUC** (added March 2026) - for threshold-aware evaluation
 - Cross-validation to avoid overfitting
 - Learning curves to diagnose underfitting vs overfitting
 
 ### Decision Boundaries
 - Section 11 visualizes how different KNN values (n_neighbors) produce different decision boundaries
 - Demonstrates overfitting (too detailed) vs underfitting (too smooth)
+
+### Clustering Methods
+- **Section 3.B**: K-Means algorithm
+- **Section 3.B.2**: Elbow Method for choosing optimal k (added March 2026)
+- **Section 3.B.3**: Hierarchical Clustering with dendrogram visualization (added March 2026)
+
+### Text Vectorization
+- **Section 9**: TF-IDF vectorization (added March 2026) - superior to bag-of-words for NLP tasks
 
 ## Common Workflows
 
