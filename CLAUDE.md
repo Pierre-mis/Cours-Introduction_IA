@@ -4,152 +4,84 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a French-language AI education course designed for beginners. It provides a comprehensive introduction to artificial intelligence, covering theoretical foundations, practical implementations, and ethical considerations.
+French-language introductory AI course aimed at beginners. Covers theoretical foundations, hands-on `scikit-learn` work, and ethical considerations. The whole repository is **course material**, not an application — there is no build/test pipeline, only notebooks and demo scripts.
 
-### Main Components
+### Top-level layout
 
-- **Cours_Introduction_IA.ipynb** - Main course notebook with complete curriculum:
-  - Introduction to AI history and applications
-  - Best practices and ethics
-  - Supervised learning (classification, regression)
-  - Unsupervised learning (clustering, dimensionality reduction)
-  - Reinforcement learning (Q-learning example)
-  - Common models (Linear Regression, KNN, SVM, Decision Trees, Random Forest, Neural Networks)
-  - Model evaluation and cross-validation
-  - Deep Learning and Computer Vision
-  - NLP and sentiment analysis
-  - Bias and fairness in AI
+- `Cours_Introduction_IA.ipynb` — main course notebook (full curriculum)
+- `Notions_Essentielles.md` — **canonical reference mémo** for the entire course (concepts, formulas, checklists). When a student or the user asks "what should I know about X", check here first; keep this file in sync when course content evolves.
+- `Exploration_Donnees.ipynb` — data exploration / EDA companion notebook
+- `Metriques_Modeles.ipynb` — focused notebook on evaluation metrics (confusion matrix, ROC, regression metrics)
+- `Cours.pptx` — slide deck (binary, do not edit programmatically)
+- TPs (practical assignments), each in `_Sujet` (student) + `_Correction` (solution) form:
+  - TP1 — Classification (santé)
+  - TP2 — Régression (santé)
+  - TP3 — Clustering (santé)
+  - TP4 — Deep Learning
+  - TP5 — Reinforcement Learning (Q-Learning)
+  - TP6 — NLP
+  - TP7 — Fuite de données (data leakage)
+  - TP8 — Données problématiques (data quality)
+  - `TP_Blanc` — mock exam
+- `démo/` — standalone Python scripts producing animated GIFs for in-class demos
+- `images/` — static figures used in notebooks/slides
 
-- **Practical Assignments (TP)** - 6 practical exercises:
-  - TP1: Classification (Health dataset)
-  - TP2: Regression (Health dataset)
-  - TP3: Clustering (Health dataset)
-  - TP4: Deep Learning
-  - TP5: Reinforcement Learning
-  - TP6: NLP
-  - Each TP has both subject (`*_Sujet.ipynb`) and correction (`*_Correction.ipynb`) versions
+### .gitignore policy (important)
 
-- **Demo Scripts** (`démo/` directory) - Interactive Python scripts for visualization:
-  - `classification_animation.py` - Animated neural network training on moons dataset
-  - `regression_comparison.py` - Comparison of different regression models
-  - `clustering_animation.py` - K-Means clustering visualization
-  - `reduction_animation.py` - Dimensionality reduction (PCA) visualization
-  - `rl_animation.py` & `rl_pacman_animation.py` - Reinforcement learning demos
-  - `supervised_vs_unsupervised.py` - Comparison visualization
-  - `demo_regression.py` - Regression examples
+`/.gitignore` deliberately **excludes most correction files and the `démo/` directory** from git. Specifically tracked-out: TP3/TP4/TP5/TP6 corrections, `TP_Blanc_Correction.ipynb`, the entire `démo/` folder, and `images/`. TP1/TP2 corrections are commented-out (so they ARE tracked). When modifying corrections, do not stage gitignored ones — and don't "fix" the .gitignore by un-ignoring them without asking the user; the asymmetry is intentional (some corrections are released to students, others aren't).
 
-## Development Commands
-
-### Running Jupyter Notebooks
+## Common Commands
 
 ```bash
-# Start Jupyter to view/edit course material
+# Open the main course
 jupyter notebook Cours_Introduction_IA.ipynb
 
-# Run a specific practical assignment
+# A specific TP (subject vs correction)
 jupyter notebook TP1_IA_Sante_Classification_Sujet.ipynb
 jupyter notebook TP1_IA_Sante_Classification_Correction.ipynb
-```
 
-### Running Demo Scripts
-
-```bash
-# Most demo scripts require matplotlib and produce animated visualizations (GIFs)
+# Run a demo animation (writes a .gif into démo/)
 python démo/classification_animation.py
 python démo/clustering_animation.py
 python démo/reduction_animation.py
-
-# These create visualization outputs in the démo directory
 ```
+
+There is no test suite, no linter, no package manifest — dependencies are installed ad-hoc in the user's Python environment.
 
 ## Dependencies
 
-The project uses core Python ML libraries (in notebooks):
-- `numpy` - Numerical computations
-- `pandas` - Data manipulation
-- `matplotlib`, `seaborn` - Visualization
-- `scikit-learn` - Classic ML algorithms (KNN, SVM, Random Forest, etc.)
-- `sklearn.neural_network.MLPClassifier` - Basic neural networks
+Notebooks rely on the standard scientific Python stack: `numpy`, `pandas`, `matplotlib`, `seaborn`, `scikit-learn` (incl. `sklearn.neural_network.MLPClassifier`). NLP sections optionally reference `transformers` (Hugging Face); deep-learning frameworks (`tensorflow`, `pytorch`) are mentioned conceptually but not required. Demo GIFs use `matplotlib.animation.FuncAnimation` + `PillowWriter`.
 
-Optional for advanced work:
-- `TensorFlow` / `PyTorch` - For deep learning (referenced but not required for basic course)
-- `transformers` (Hugging Face) - For NLP with pretrained models (mentioned in NLP section)
+## Architecture / Pedagogical Conventions
 
-## Content Architecture
+The course is intentionally `sklearn`-only to keep focus on concepts rather than framework plumbing. Each notebook section follows a consistent four-beat pattern:
 
-### Learning Progression
+1. **Theory** — concept + formula
+2. **Visualization** — plot showing the idea
+3. **Code** — minimal `sklearn` implementation
+4. **Evaluation** — metrics + interpretation
 
-The course follows a structured learning path:
+When editing a section, preserve this rhythm. Code outputs are part of the pedagogy — re-running cells should produce results that *teach* (e.g., a deliberately overfit model should still look overfit). If you change a code cell, re-execute it and confirm the output still matches the surrounding narrative.
 
-1. **Foundations** - What is AI, history, ethics
-2. **Supervised Learning** - Classification and regression with labeled data
-3. **Unsupervised Learning** - Finding patterns without labels
-4. **Reinforcement Learning** - Learning from rewards/penalties
-5. **Advanced Topics** - Deep Learning, Computer Vision, NLP
-6. **Practical Skills** - Model evaluation, hyperparameter tuning, bias detection
+### Subject ↔ Correction synchronization
 
-### Data and Datasets
+`*_Sujet.ipynb` files contain scaffolding with code blanks/TODOs for students. `*_Correction.ipynb` files contain the full solution. **Both must stay in sync** — when you change a question, the correction has to follow, and vice versa. The Sujet should never reveal the answer; the Correction should answer the exact question the Sujet asks.
 
-The course uses well-known datasets:
-- **Iris dataset** - Classic multiclass classification (flowers)
-- **Digits dataset** - Handwritten digit recognition (8x8 images)
-- **Synthetic data** - Generated datasets for demonstrations
-- **Health datasets** - Custom datasets for TP exercises (TP1-TP3)
+### Where things "live"
 
-### Code Patterns and Conventions
+- Conceptual content + formulas: `Notions_Essentielles.md` (markdown, easily searchable). Treat this as the source of truth for definitions.
+- Worked examples + animations: `Cours_Introduction_IA.ipynb` and `démo/*.py`.
+- Hands-on practice: TP notebooks. TP7 (data leakage) and TP8 (data quality) are deliberately about *anti-patterns* — code there demonstrates what *not* to do alongside the fix.
 
-The notebooks follow a consistent educational pattern:
-1. **Theory section** - Mathematical formulas and conceptual explanation
-2. **Visualization** - Plots showing how the concept works
-3. **Code example** - Practical implementation with sklearn
-4. **Evaluation** - Performance metrics and interpretation
+## Key Educational Themes (cross-cut multiple files)
 
-All code uses `sklearn` (scikit-learn) for consistency and ease of learning.
+- **Medical-context priority on Recall**: in TPs using health datasets, the canonical message is "minimize false negatives." Don't switch to accuracy-based scoring without thinking about this.
+- **Data leakage**: TP7 + Section 10 of `Notions_Essentielles.md`. Always fit preprocessors on train only; use `Pipeline` in cross-validation contexts.
+- **Bias & fairness**: integrated throughout (esp. recruiter / postal-code example), not a single appendix section. When adding examples, prefer ones that make the bias visible.
+- **Threshold-aware evaluation**: ROC/AUC and threshold tuning are presented as first-class tools, not just accuracy.
 
-## Key Educational Concepts
+## Notes for Future Work
 
-### Bias and Fairness
-- Section 10 demonstrates how AI can inherit and amplify biases from historical data
-- Example: Recruiter model learns to discriminate based on postal code
-- Solution: Feature selection and fairness-aware modeling
-
-### Model Evaluation Beyond Accuracy
-- Section 5.A: Confusion matrices, precision, recall, F1-score
-- Section 5.A.2: **ROC Curves & AUC** (added March 2026) - for threshold-aware evaluation
-- Cross-validation to avoid overfitting
-- Learning curves to diagnose underfitting vs overfitting
-
-### Decision Boundaries
-- Section 11 visualizes how different KNN values (n_neighbors) produce different decision boundaries
-- Demonstrates overfitting (too detailed) vs underfitting (too smooth)
-
-### Clustering Methods
-- **Section 3.B**: K-Means algorithm
-- **Section 3.B.2**: Elbow Method for choosing optimal k (added March 2026)
-- **Section 3.B.3**: Hierarchical Clustering with dendrogram visualization (added March 2026)
-
-### Text Vectorization
-- **Section 9**: TF-IDF vectorization (added March 2026) - superior to bag-of-words for NLP tasks
-
-## Common Workflows
-
-### Editing Course Content
-- Modify `Cours_Introduction_IA.ipynb` carefully - ensure explanations and code examples remain aligned
-- When updating code cells, verify that outputs make sense pedagogically
-
-### Adding New Demo Scripts
-- Follow the existing pattern: generate data → visualize → save animation
-- Use `FuncAnimation` with `PillowWriter` for GIF output (see `classification_animation.py`)
-- Document the algorithm being demonstrated clearly
-
-### Updating TPs
-- Subject files (`*_Sujet.ipynb`) contain incomplete code for students
-- Correction files (`*_Correction.ipynb`) contain full solutions
-- Keep both versions in sync when making changes
-
-## Important Notes for Future Work
-
-- **Language**: Content is in French. Maintain this for consistency with students.
-- **Scope**: This is introductory material. Code intentionally uses `sklearn` rather than deep frameworks like TensorFlow to keep focus on concepts.
-- **Ethical emphasis**: AI ethics (bias, fairness, explainability) is integrated throughout, not as an afterthought.
-- **Visualization-heavy**: The course prioritizes visual understanding - many plots and animations are critical to learning.
+- **Language**: All student-facing content is French. Maintain French in notebook markdown, comments, variable names where pedagogical, and error messages. Code identifiers can stay English where conventional (`X_train`, `accuracy_score`, etc.).
+- **Visual-first**: plots and animations are load-bearing for understanding — don't strip them for "cleaner" notebooks.
+- **Scope discipline**: this is an *introduction*. Resist adding TensorFlow/PyTorch examples to the core notebook unless explicitly requested — the `sklearn`-only constraint is a feature.

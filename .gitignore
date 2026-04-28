@@ -1,7 +1,7 @@
 /.DS_Store
 #/TP1_IA_Sante_Classification_Correction.ipynb
 #/TP2_IA_Sante_Regression_Correction.ipynb
-/TP3_IA_Sante_Clustering_Correction.ipynb
+#/TP3_IA_Sante_Clustering_Correction.ipynb
 /TP4_IA_Sante_DeepLearning_Correction.ipynb
 /TP5_IA_Sante_Renforcement_Correction.ipynb
 /TP6_IA_Sante_NLP_Correction.ipynb
@@ -9,3 +9,7 @@
 /images
 /~$Cours.pptx
 /TP_Blanc_Correction.ipynb
+TODO_prochaine_promo.md
+prototype_TP_RL
+CLAUDE.md
+.claude
