@@ -13,5 +13,11 @@ TODO_prochaine_promo.md
 prototype_TP_RL
 CLAUDE.md
 .claude
-TP_Note_Sujets.md
-TP_Note
+# TP_Note_Sujets.md
+# Prof-only material à l'intérieur de TP_Note (reste caché même si TP_Note devient suivi)
+TP_Note/_prof_only/
+TP_Note/**/__pycache__/
+TP_Note/**/*.pyc
+# Datasets téléchargés par les étudiants (cf. data/README.md de chaque TP) — pas dans le repo
+TP_Note/**/data/*
+!TP_Note/**/data/README.md
