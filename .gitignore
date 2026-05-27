@@ -4,11 +4,13 @@
 #/TP3_IA_Sante_Clustering_Correction.ipynb
 #/TP4_IA_Sante_DeepLearning_Correction.ipynb
 #/TP5_IA_Sante_Renforcement_Correction.ipynb
-/TP6_IA_Sante_NLP_Correction.ipynb
+#/TP6_IA_Sante_NLP_Correction.ipynb
 /démo
 /images
 /~$Cours.pptx
 #/TP_Blanc_Correction.ipynb
+# Contrôle 30 min (sujet + corrigé) — non distribué via le repo
+/Controle_30min_*
 TODO_prochaine_promo.md
 prototype_TP_RL
 CLAUDE.md
@@ -16,8 +18,11 @@ CLAUDE.md
 # TP_Note_Sujets.md
 # Prof-only material à l'intérieur de TP_Note (reste caché même si TP_Note devient suivi)
 TP_Note/_prof_only/
+# Évaluations / notes des étudiants (prof-only)
+TP_Note/Evaluations/
 TP_Note/**/__pycache__/
 TP_Note/**/*.pyc
 # Datasets téléchargés par les étudiants (cf. data/README.md de chaque TP) — pas dans le repo
 TP_Note/**/data/*
 !TP_Note/**/data/README.md
+Rendu TP noté
